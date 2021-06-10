@@ -23,7 +23,7 @@ router.get('/infected/:id', (req, res) => {
     })
 })
 
-
+  
 router.post('/infected', (req,res) => {
     let body = req.body
     console.log(body)

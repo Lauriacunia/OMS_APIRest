@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan= require('morgan');
-
 const app = express();
+
 
 
 // conecting to db
 
-mongoose.connect('mongodb+srv://oms:************@cluster0.cyfup.mongodb.net/omsCovid?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://oms:contraseniaSegura2021@cluster0.cyfup.mongodb.net/omsCovid?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(db => console.log('Db connected'))
@@ -23,6 +23,7 @@ app.set('port', process.env.PORT || 3000);
 //middlewares
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}))
+app.use(express.json());
 
 // routes
 
