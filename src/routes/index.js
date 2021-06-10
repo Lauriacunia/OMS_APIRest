@@ -11,7 +11,6 @@ const Infected = require('../models/infected');
 */
 
 router.get('/infected', (req, res) => { 
-
     Infected.find({}, (err, infectados) => {
         if(err) return res.status(500).send({message: `Error al buscar todos los registros`})
         if(!infectados) return res.status(404).send({message: 'La informacion solicitada no existe en nuestra base de datos'})
@@ -21,6 +20,7 @@ router.get('/infected', (req, res) => {
 
 router.get('/infected/:id', (req, res) => { 
     let infectedId = req.params.id
+
     Infected.findById(infectedId, (err, infected) =>{
         if(err) return res.status(500).send({message: `Error al buscar el registro Id: ${infectedId} `})
         if(!infected) return res.status(404).send({message: `El registro buscado no existe en nuestra base de datos`})
@@ -30,7 +30,6 @@ router.get('/infected/:id', (req, res) => {
 
 
 router.get('/infected/name/:first_name', (req,res) => {
-
     const nameInfected = req.params.first_name
 
     Infected.find({first_name: nameInfected}, (err, infected) => {
@@ -99,9 +98,7 @@ router.get('/infected/country/:country', (req,res) => {
 
 router.post('/infected', (req,res) => {
     let body = req.body
-    console.log(body)
     let infected = new Infected();
-     console.log(infected)
 
     infected.first_name = body.first_name
     infected.last_name = body.last_name
@@ -111,8 +108,6 @@ router.post('/infected', (req,res) => {
     infected.infect_date = Date.now();
     infected.female = body.female
     
-    console.log(infected)
-
     infected.save((err, infectedStored) => {
         if(err) res.status(500).send({message: `Error al guardar la información en la base de datos: ${err}`})
         res.status(200).send({infected: infectedStored})
@@ -131,6 +126,7 @@ router.put('/infected/:id', (req,res) => {
 
 router.delete('/infected/:id', (req,res) => {
     let infectedId = req.params.id
+
     Infected.findById(infectedId, (err, infected) =>{
         if(err) return res.status(500).send({message: `Error al borrar el registro Id: ${infectedId} `})
         infected.remove(err => {
@@ -155,6 +151,7 @@ router.get('/countries', (req, res) => {
 
 router.get('/countries/:id', (req, res) => { 
     let countryId = req.params.id
+
     Country.findById(countryId, (err, country) =>{
         if(err) return res.status(500).send({message: `Error al buscar el registro Id: ${countryId} `})
         if(!country) return res.status(404).send({message: 'El registro buscado no existe en nuestra base de datos'})
@@ -163,7 +160,6 @@ router.get('/countries/:id', (req, res) => {
 })
 
 router.get('/countries/name/:name', (req,res) => {
-
     const nameCountry = req.params.name
 
     Country.find({name: nameCountry}, (err, country) => {
@@ -198,6 +194,7 @@ router.put('/countries/:id', (req,res) => {
 
 router.delete('/countries/:id', (req,res) => {
     let countryId = req.params.id
+    
     Country.findById(countryId, (err, country) =>{
         if(err) return res.status(500).send({message: `Error al borrar el registro Id: ${countryId} `})
         country.remove(err => {
