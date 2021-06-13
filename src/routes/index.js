@@ -11,13 +11,9 @@ const Infected = require('../models/infected');
 */
 
 router.get('/infected', (req, res) => { 
-    console.log(req.query)
-    console.log(req.query.order_by)
-    console.log(req.query.sort)
     const sort = parseInt(req.query.sort)
 
     if(req.query.order_by){
-        console.log("hay query")
         Infected.find({}).sort([[`${req.query.order_by}`, `${sort}`]]).exec((err, infectados) => {
             if(err) return res.status(500).send({message: `Error al buscar todos los registros`})
             if(!infectados) return res.status(404).send({message: 'La informacion solicitada no existe en nuestra base de datos'})
@@ -157,11 +153,20 @@ router.delete('/infected/:id', (req,res) => {
 */
 
 router.get('/countries', (req, res) => { 
-    Country.find({}, (err, countries) => {
-        if(err) return res.status(500).send({message: `Error al buscar todos los registros`})
-        if(!countries) return res.status(404).send({message: 'La informacion solicitada no existe en nuestra base de datos'})
-        res.status(200).send({ countries })
-    })
+    const sort = parseInt(req.query.sort)
+    if(req.query.order_by){
+        Country.find({}).sort([[`${req.query.order_by}`, `${sort}`]]).exec((err, countries) => {
+            if(err) return res.status(500).send({message: `Error al buscar todos los registros`})
+            if(!countries) return res.status(404).send({message: 'La informacion solicitada no existe en nuestra base de datos'})
+            res.status(200).send({ countries })
+        })
+    }else {
+        Country.find({}, (err, countries) => {
+            if(err) return res.status(500).send({message: `Error al buscar todos los registros`})
+            if(!countries) return res.status(404).send({message: 'La informacion solicitada no existe en nuestra base de datos'})
+            res.status(200).send({ countries })
+        })
+    }
 })
 
 router.get('/countries/:id', (req, res) => { 
