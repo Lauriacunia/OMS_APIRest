@@ -11,11 +11,26 @@ const Infected = require('../models/infected');
 */
 
 router.get('/infected', (req, res) => { 
+    console.log(req.query)
+    console.log(req.query.order_by)
+    console.log(req.query.sort)
+    const sort = parseInt(req.query.sort)
+
+    if(req.query.order_by){
+        console.log("hay query")
+        Infected.find({}).sort([[`${req.query.order_by}`, `${sort}`]]).exec((err, infectados) => {
+            if(err) return res.status(500).send({message: `Error al buscar todos los registros`})
+            if(!infectados) return res.status(404).send({message: 'La informacion solicitada no existe en nuestra base de datos'})
+            res.status(200).send({ infectados })
+        })
+    }else {
+
     Infected.find({}, (err, infectados) => {
         if(err) return res.status(500).send({message: `Error al buscar todos los registros`})
         if(!infectados) return res.status(404).send({message: 'La informacion solicitada no existe en nuestra base de datos'})
         res.status(200).send({ infectados })
     })
+   }
 })
 
 router.get('/infected/:id', (req, res) => { 

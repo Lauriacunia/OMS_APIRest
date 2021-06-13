@@ -9,32 +9,49 @@ const app = express();
          Conecting to DB
    ～●～●～●～●～●～●～●～●～●～●～ 
 */
-// conecting to db
 
-mongoose.connect('mongodb+srv://oms:**********@cluster0.cyfup.mongodb.net/omsCovid?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://oms:contraseniaSegura2021@cluster0.cyfup.mongodb.net/omsCovid?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(db => console.log('Db connected'))
   .catch(err => console.log(err));
 
-// importing routes
+/* ～●～●～●～●～●～●～●～●～●～●～ 
+         Importing Routes
+   ～●～●～●～●～●～●～●～●～●～●～ 
+*/
+
 const indexRoutes = require('./routes/index');
 
-// settings
+/* ～●～●～●～●～●～●～●～●～●～●～ 
+         Settings
+   ～●～●～●～●～●～●～●～●～●～●～ 
+*/
+
 app.set('port', process.env.PORT || 3000);
 app.use(cors());
 
-//middlewares
+/* ～●～●～●～●～●～●～●～●～●～●～ 
+         Middlewares
+   ～●～●～●～●～●～●～●～●～●～●～ 
+*/
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 
-// routes
+/* ～●～●～●～●～●～●～●～●～●～●～ 
+         Routes
+   ～●～●～●～●～●～●～●～●～●～●～ 
+*/
 
 app.use('/', indexRoutes);
 
-//starting the server
+/* ～●～●～●～●～●～●～●～●～●～●～ 
+         Starting the server
+   ～●～●～●～●～●～●～●～●～●～●～ 
+*/
 
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`)
