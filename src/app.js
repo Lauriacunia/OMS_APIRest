@@ -10,7 +10,7 @@ const app = express();
    ～●～●～●～●～●～●～●～●～●～●～ 
 */
 
-mongoose.connect('mongodb+srv://oms:contraseniaSegura2021@cluster0.cyfup.mongodb.net/omsCovid?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://oms:acaVaLaContraseña@cluster0.cyfup.mongodb.net/omsCovid?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(db => console.log('Db connected'))
